@@ -1,0 +1,2 @@
+class NytJourneys::Journeys
+end
