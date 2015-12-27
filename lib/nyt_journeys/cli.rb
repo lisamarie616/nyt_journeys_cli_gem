@@ -1,2 +1,3 @@
 class NytJourneys::CLI
+
 end
