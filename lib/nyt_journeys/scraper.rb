@@ -33,7 +33,7 @@ class NytJourneys::Scraper
   # length: trip_details.css("div.itinerary-info > p").text
   # dates: div.departures a.departure-link
   # itinerary: div.primary-information, div.day-number, h3.day-title
-  def self.scrape_trip_page(trip_url="http://www.nytimes.com/times-journeys/travel/cuba-times-now/")
+  def self.scrape_trip_page(trip_url="http://www.nytimes.com/times-journeys/travel/shakespeare-england/")
     trip_details = Nokogiri::HTML(open(trip_url))
     trip = {}
 
@@ -41,7 +41,7 @@ class NytJourneys::Scraper
     trip_details.css("div.trip-description p").each do |paragraph|
       trip[:description] << "#{paragraph.text} "
     end
-    trip[:description].gsub!(/(\n)/," ").strip!
+    trip[:description].strip!.gsub!(/(\n)/," ")
 
     trip[:cost] = trip_details.css("div.price p").text[/(\d|,)+/].gsub(",","").to_i
     trip[:length] = trip_details.css("div.itinerary-info > p").text.strip[/.+s/]
@@ -55,7 +55,8 @@ class NytJourneys::Scraper
     trip_details.css("div.primary-information").each do |day|
       trip[:itinerary] << "#{day.css("div.day-number").text} - #{day.css("h3.day-title").text}"
     end
+    binding.pry
     trip
   end
-  
+
 end
