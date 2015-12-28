@@ -12,4 +12,4 @@ require "nyt_journeys"
 
 require "irb"
 # IRB.start
-NytJourneys::Scraper.scrape_type_detail_page
+NytJourneys::Scraper.scrape_trip_page
