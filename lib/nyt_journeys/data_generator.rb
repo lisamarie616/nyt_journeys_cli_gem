@@ -10,7 +10,6 @@ class NytJourneys::Data_Generator
     trip_array.flatten!
 
     NytJourneys::Journeys.create_from_collection(trip_array)
-    binding.pry
   end
-  
+
 end
