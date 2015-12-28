@@ -16,46 +16,17 @@ class NytJourneys::Scraper
 
   # trip_name: .css("h2.item-title").text
   # trip_url: .css.attribute("href").value
-  def self.scrape_type_detail_page(type_url)
-    type_details = Nokogiri::HTML(open(type_url))
+  def self.scrape_type_detail_page(types_hash)
+    type_details = Nokogiri::HTML(open(types_hash.values[1]))
     trips =[]
     type_details.css("li.journey-list-item > a").each do |trip|
       trips_hash = {}
       trips_hash[:name] = trip.css("h2.item-title").text
       trips_hash[:url] = trip.attribute("href").value
+      trips_hash[:type] = types_hash.values[0]
       trips << trips_hash
     end
-    trips  # an array of trip hashes with name and url properties
+    trips  # an array of trip hashes with name, url, and type properties
   end
-
-  # description: trip_details.css("div.trip-description p")
-  # cost: trip_details.css("div.price p").text
-  # length: trip_details.css("div.itinerary-info > p").text
-  # dates: div.departures a.departure-link
-  # itinerary: div.primary-information, div.day-number, h3.day-title
-  # def self.scrape_trip_page(trip_url)
-  #   trip_details = Nokogiri::HTML(open(trip_url))
-  #   trip = {}
-
-  #   trip[:description] = ""
-  #   trip_details.css("div.trip-description p").each do |paragraph|
-  #     trip[:description] << "#{paragraph.text} "
-  #   end
-  #   trip[:description].strip!.gsub!(/(\n)/," ")
-
-  #   trip[:cost] = trip_details.css("div.price p").text[/(\d|,)+/].gsub(",","").to_i
-  #   trip[:length] = trip_details.css("div.itinerary-info > p").text.strip[/.+s/]
-
-  #   trip[:dates] = []
-  #   trip_details.css("div.departures a.departure-link").each do |dates|
-  #     trip[:dates] << dates.text
-  #   end
-
-  #   trip[:itinerary] = []
-  #   trip_details.css("div.primary-information").each do |day|
-  #     trip[:itinerary] << "#{day.css("div.day-number").text} - #{day.css("h3.day-title").text}"
-  #   end
-  #   trip  # hash with trip attributes
-  # end
 
 end

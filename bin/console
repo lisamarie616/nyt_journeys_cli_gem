@@ -12,4 +12,6 @@ require "nyt_journeys"
 
 require "irb"
 # IRB.start
+
+
 NytJourneys::Data_Generator.new.make_journeys
