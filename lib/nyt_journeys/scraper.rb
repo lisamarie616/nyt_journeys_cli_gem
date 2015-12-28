@@ -29,4 +29,23 @@ class NytJourneys::Scraper
     trips  # an array of trip hashes with name, url, and type properties
   end
 
+  #  quote: quotations_page.css("dt.quote"), .css("a").text
+  #  author: quotations_page.css("dd.author), .css("a").text
+  def self.scrape_quotes(quotes_url="http://www.quotationspage.com/search.php3?homesearch=journey&page=1")
+    quotations_page = Nokogiri::HTML(open(quotes_url))
+    quotes = []
+    quotations_page.css("dt.quote").each do |quote|
+      item = "#{quote.css("a").text}"
+      quotes << item
+    end
+    authors = []
+    quotations_page.css("dd.author").each do |author|
+       item = "#{author.css("a")[4].text}"
+       authors << item
+    end
+    quotes.map.with_index do |quote, index|
+      "#{quote} ~ #{authors[index]}"
+    end
+  end
+
 end

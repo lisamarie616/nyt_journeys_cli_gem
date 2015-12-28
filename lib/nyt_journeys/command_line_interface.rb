@@ -41,7 +41,6 @@ class NytJourneys::CommandLineInterface
       puts "Which journey would you like to learn more about? Enter 1 - #{NytJourneys::Journeys.all.count}."
       puts ""
       puts "Enter 'list' to see the journeys again."
-      puts "Enter 'types' to view categories and explore journeys that way."
       puts "Enter 'exit' to end the program."
       puts ""
       input = gets.strip
@@ -53,7 +52,10 @@ class NytJourneys::CommandLineInterface
         end
       end
     end
-    puts "goodbye"
+    puts ""
+    puts NytJourneys::Scraper.scrape_quotes.sample
+    puts ""
+    puts "Enjoy the journey!"
   end
 
 end
