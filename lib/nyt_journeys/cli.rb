@@ -1,3 +1,0 @@
-class NytJourneys::CLI
-
-end

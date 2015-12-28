@@ -2,7 +2,7 @@ class NytJourneys::Scraper
   
   # type_name: .css("h3.trip-type-list-title").text
   # type_url: .css("a.view-all-link").attribute("href").value
-  def self.scrape_type_summary_page(summary_url = "http://www.nytimes.com/times-journeys/trip-type/")
+  def self.scrape_type_summary_page(summary_url)
     type_summary = Nokogiri::HTML(open(summary_url))
     types = []
     type_summary.css("div.trip-type-listings").each do |type|
@@ -16,8 +16,8 @@ class NytJourneys::Scraper
 
   # trip_name: .css("h2.item-title").text
   # trip_url: .css.attribute("href").value
-  def self.scrape_type_detail_page(details_url)
-    type_details = Nokogiri::HTML(open(details_url))
+  def self.scrape_type_detail_page(type_url)
+    type_details = Nokogiri::HTML(open(type_url))
     trips =[]
     type_details.css("li.journey-list-item > a").each do |trip|
       trips_hash = {}
@@ -33,7 +33,7 @@ class NytJourneys::Scraper
   # length: trip_details.css("div.itinerary-info > p").text
   # dates: div.departures a.departure-link
   # itinerary: div.primary-information, div.day-number, h3.day-title
-  def self.scrape_trip_page(trip_url="http://www.nytimes.com/times-journeys/travel/shakespeare-england/")
+  def self.scrape_trip_page(trip_url)
     trip_details = Nokogiri::HTML(open(trip_url))
     trip = {}
 
@@ -56,7 +56,7 @@ class NytJourneys::Scraper
       trip[:itinerary] << "#{day.css("div.day-number").text} - #{day.css("h3.day-title").text}"
     end
     binding.pry
-    trip
+    trip  # hash with trip attributes
   end
 
 end
