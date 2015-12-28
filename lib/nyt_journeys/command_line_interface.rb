@@ -4,7 +4,15 @@ class NytJourneys::CommandLineInterface
     start
   end
 
-  def list
+  def greeting
+    puts ""
+    puts "~~*~~*~~*~~ New York Times Journeys ~~*~~*~~*~~"
+    puts ""
+    puts NytJourneys::Scraper.scrape_quotes.sample
+    puts ""
+  end
+
+  def list_journeys
     puts ""
     puts "~~*~~*~~*~~ Available New York Times Journeys ~~*~~*~~*~~"
     puts ""
@@ -12,6 +20,23 @@ class NytJourneys::CommandLineInterface
       puts "#{index}. #{journey.name}"
     end
     puts ""
+  end
+
+  def navigate_journeys
+    list_journeys
+    puts ""
+    puts "Which journey would you like to learn more about? Enter 1 - #{NytJourneys::Journeys.all.count}."
+    puts ""
+    puts "Enter 'types' to see journey categories."
+    puts "Enter 'exit' to end the program."
+    input = gets.downcase.strip
+      if input == "types"
+        navigate_types
+      elsif input.to_i > 0
+        if journey = NytJourneys::Journeys.find(input.to_i)
+          print_journey(journey)
+        end
+      end
   end
 
   def print_journey(journey)
@@ -33,23 +58,77 @@ class NytJourneys::CommandLineInterface
     puts ""
   end
 
+  def list_types
+    puts ""
+    puts "~~*~~*~~*~~ Journeys Focused On ~~*~~*~~*~~"
+    puts ""
+    NytJourneys::Journeys.types.each.with_index(1) do |type, index|
+      puts "#{index}. #{type}"
+    end
+    puts ""
+  end
+
+  def navigate_types
+    list_types
+    puts ""
+    puts "Which type of journey would you like to take? Enter 1 - #{NytJourneys::Journeys.types.count}."
+    puts ""
+    puts "Enter 'list' to see all journeys."
+    puts "Enter 'exit' to end the program."
+    input = gets.downcase.strip
+      if input == "list"
+        navigate_journeys
+      elsif input.to_i > 0
+        if category = NytJourneys::Journeys.types[input.to_i - 1]
+          print_category(category)
+          navigate_category(category)
+        end
+      end
+  end
+
+  def print_category(category)
+    puts ""
+    puts "~~*~~*~~*~~ Journeys Focused On #{category} ~~*~~*~~*~~"
+    puts ""
+    NytJourneys::Journeys.find_by_type(category).each.with_index(1) do |journey, index|
+      puts "#{index}. #{journey.name}"
+    end
+    puts ""
+  end
+
+  def navigate_category(category)
+    puts ""
+    puts "Which journey would you like to learn more about? Enter 1 - #{NytJourneys::Journeys.find_by_type(category).count}."
+    puts ""
+    puts "Enter 'list' to see all journeys."
+    puts "Enter 'types' to see journey categories."
+    puts "Enter 'exit' to end the program."
+    input = gets.downcase.strip
+      if input == "list"
+        navigate_journeys
+      elsif input == "types"
+        navigate_types
+      elsif input.to_i > 0
+        if journey = NytJourneys::Journeys.find_by_type(category)[input.to_i - 1]
+          print_journey(journey)
+        end
+      end
+  end
+
   def start
-    list
+    greeting
     input = nil
     while input != "exit"
       puts ""
-      puts "Which journey would you like to learn more about? Enter 1 - #{NytJourneys::Journeys.all.count}."
-      puts ""
-      puts "Enter 'list' to see the journeys again."
+      puts "Enter 'list' to see all journeys."
+      puts "Enter 'types' to see journey categories."
       puts "Enter 'exit' to end the program."
       puts ""
-      input = gets.strip
+      input = gets.downcase.strip
       if input == "list"
-        list
-      elsif input.to_i > 0
-        if journey = NytJourneys::Journeys.find(input.to_i)
-          print_journey(journey)
-        end
+        navigate_journeys
+      elsif input == "types"
+        navigate_types
       end
     end
     puts ""
@@ -57,5 +136,4 @@ class NytJourneys::CommandLineInterface
     puts ""
     puts "Enjoy the journey!"
   end
-
 end

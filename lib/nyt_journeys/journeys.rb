@@ -20,6 +20,14 @@ class NytJourneys::Journeys
     all[id - 1]
   end
 
+  def self.types
+    all.collect {|journey| journey.type}.uniq
+  end
+
+  def self.find_by_type(type)
+    all.select {|journey| journey.type == type}
+  end
+
   def doc
     Nokogiri::HTML(open(url))
   end
