@@ -14,6 +14,25 @@ class NytJourneys::CommandLineInterface
     puts ""
   end
 
+  def print_journey(journey)
+    puts ""
+    puts "~~*~~*~~*~~ #{journey.name} ~~*~~*~~*~~"
+    puts "A Journey Focused On #{journey.type}"
+    puts ""
+    puts journey.description
+    puts ""
+    puts "From: #{journey.cost}"
+    puts ""
+    puts "Journey Duration: #{journey.length}"
+    puts ""
+    puts "Available Dates:"
+    puts journey.dates
+    puts ""
+    puts "Itinerary:"
+    puts journey.itinerary
+    puts ""
+  end
+
   def start
     list
     input = nil
@@ -26,6 +45,13 @@ class NytJourneys::CommandLineInterface
       puts "Enter 'exit' to end the program."
       puts ""
       input = gets.strip
+      if input == "list"
+        list
+      elsif input.to_i > 0
+        if journey = NytJourneys::Journeys.find(input.to_i)
+          print_journey(journey)
+        end
+      end
     end
     puts "goodbye"
   end

@@ -16,6 +16,10 @@ class NytJourneys::Journeys
     @@all
   end
 
+  def self.find(id)
+    all[id - 1]
+  end
+
   def doc
     Nokogiri::HTML(open(url))
   end
