@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'nyt_journeys/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "nyt_journeys"
+  spec.name          = "nyt_journeys_cli_gem"
   spec.version       = NytJourneys::VERSION
   spec.authors       = ["lisamarie616"]
   spec.email         = ["lisamarie616@gmail.com"]
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($\)
-  spec.executables   = ["now-playing"]
+  spec.executables   = ["nyt_journeys"]
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib", "lib/nyt_journeys"]
 

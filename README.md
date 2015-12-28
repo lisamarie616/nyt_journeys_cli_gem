@@ -4,7 +4,7 @@ Explore journeys available with NY Times!
 
 ## Installation
 
-You can install this gem via gem install nyt_journeys. The nyt_journeys CLI will be installed and you can run nyt_journeys to get a list of movies playing now right in your command line.
+You can install this gem via gem install nyt_journeys_cli_gem. The nyt_journeys CLI will be installed and you can run nyt_journeys to get a list of movies playing now right in your command line.
 
 ## Usage
 
