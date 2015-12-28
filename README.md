@@ -1,28 +1,14 @@
 # NytJourneys
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nyt_journeys`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Explore journeys available with NY Times!
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'nyt_journeys'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install nyt_journeys
+You can install this gem via gem install nyt_journeys. The nyt_journeys CLI will be installed and you can run nyt_journeys to get a list of movies playing now right in your command line.
 
 ## Usage
 
-TODO: Write usage instructions here
+Run: nyt_journeys after installing the gem.
 
 ## Development
 
