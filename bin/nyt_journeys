@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'now_playing'
+require 'nyt_journeys'
 
 NytJourneys::CommandLineInterface.new.call
