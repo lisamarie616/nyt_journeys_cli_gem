@@ -6,7 +6,6 @@ class NytJourneys::Journeys
   def initialize(trip_hash)
     trip_hash.each {|k,v| self.send("#{k}=",v)}
     @@all << self
-    binding.pry
   end
 
   def self.create_from_collection(trip_array)
