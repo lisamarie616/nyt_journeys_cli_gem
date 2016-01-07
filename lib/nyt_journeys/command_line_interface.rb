@@ -1,6 +1,9 @@
 class NytJourneys::CommandLineInterface
+  attr_accessor :input
+
   def call
     NytJourneys::Data_Generator.new.make_journeys
+    greeting
     start
   end
 
@@ -29,14 +32,14 @@ class NytJourneys::CommandLineInterface
     puts ""
     puts "Enter 'types' to see journey categories."
     puts "Enter 'exit' to end the program."
-    input = gets.downcase.strip
-      if input == "types"
-        navigate_types
-      elsif input.to_i > 0
-        if journey = NytJourneys::Journeys.find(input.to_i)
-          print_journey(journey)
-        end
+    self.input = gets.downcase.strip
+    if self.input == "types"
+      navigate_types
+    elsif self.input.to_i > 0
+      if journey = NytJourneys::Journeys.find(self.input.to_i)
+        print_journey(journey)
       end
+    end
   end
 
   def print_journey(journey)
@@ -75,15 +78,15 @@ class NytJourneys::CommandLineInterface
     puts ""
     puts "Enter 'list' to see all journeys."
     puts "Enter 'exit' to end the program."
-    input = gets.downcase.strip
-      if input == "list"
-        navigate_journeys
-      elsif input.to_i > 0
-        if category = NytJourneys::Journeys.types[input.to_i - 1]
-          print_category(category)
-          navigate_category(category)
-        end
+    self.input = gets.downcase.strip
+    if self.input == "list"
+      navigate_journeys
+    elsif self.input.to_i > 0
+      if category = NytJourneys::Journeys.types[self.input.to_i - 1]
+        print_category(category)
+        navigate_category(category)
       end
+    end
   end
 
   def print_category(category)
@@ -103,31 +106,30 @@ class NytJourneys::CommandLineInterface
     puts "Enter 'list' to see all journeys."
     puts "Enter 'types' to see journey categories."
     puts "Enter 'exit' to end the program."
-    input = gets.downcase.strip
-      if input == "list"
-        navigate_journeys
-      elsif input == "types"
-        navigate_types
-      elsif input.to_i > 0
-        if journey = NytJourneys::Journeys.find_by_type(category)[input.to_i - 1]
-          print_journey(journey)
-        end
+    self.input = gets.downcase.strip
+    if self.input == "list"
+      navigate_journeys
+    elsif self.input == "types"
+      navigate_types
+    elsif self.input.to_i > 0
+      if journey = NytJourneys::Journeys.find_by_type(category)[self.input.to_i - 1]
+        print_journey(journey)
       end
+    end
   end
 
   def start
-    greeting
-    input = nil
-    while input != "exit"
+    self.input = nil
+    while self.input != "exit"
       puts ""
       puts "Enter 'list' to see all journeys."
       puts "Enter 'types' to see journey categories."
       puts "Enter 'exit' to end the program."
       puts ""
-      input = gets.downcase.strip
-      if input == "list"
+      self.input = gets.downcase.strip
+      if self.input == "list"
         navigate_journeys
-      elsif input == "types"
+      elsif self.input == "types"
         navigate_types
       end
     end

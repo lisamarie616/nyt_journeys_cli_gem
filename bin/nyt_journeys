@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'nyt_journeys'
+require './lib/nyt_journeys.rb'
 
 NytJourneys::CommandLineInterface.new.call
